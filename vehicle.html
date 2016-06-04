@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <title></title>
+  </head>
+  <body class="container">
+    <h1>Vehicle Form</h1>
+      <form>
+        <fieldset class="form-group">
+          <input type="text" class="form-control" id="vehicleName" placeholder="Enter Name" value="BMW">
+        </fieldset>
+        <fieldset class="form-group">
+          <input type="text" class="form-control" id="vehicleDescription" placeholder="Enter Description" value="Best Car on June">
+        </fieldset>
+        <fieldset class="form-group">
+          <input type="text" class="form-control" id="vehicleCost" placeholder="Enter Cost per Kilometer" value="60">
+        </fieldset>
+        <fieldset class="form-group">
+          <select class="form-control" id="vehicleType">
+            <option>2 Wheeler</option>
+            <option>4 Wheeler CNG</option>
+            <option>4 Wheeler Petrol</option>
+          </select>
+        </fieldset>
+        <button type="button" class="btn btn-primary" onclick="viewVehicleDetails();">Submit</button>
+      </form>
+    <div class="row" id="result">
+
+    </div>
+  </body>
+  <script type="text/javascript">
+    var Vehicle = function(name, description, vehicleType, costPerKm){
+      this.name = name;
+      this.description = description;
+      this.vehicleType = vehicleType;
+      this.costPerKm = costPerKm;
+    }
+
+    var TwoWheeler = function(){
+    }
+
+    var FourWheeler = function(fuelType){
+      this.fuelType = fuelType;
+    }
+
+    function viewVehicleDetails(){
+      var name = document.getElementById("vehicleName").value
+      var desc = document.getElementById("vehicleDescription").value
+      var cost = document.getElementById("vehicleCost").value
+      var type = document.getElementById("vehicleType").value
+      var vehicleObject = new Vehicle(name, desc, cost, type);
+      var fuelType = "";
+      if(type === "2 Wheeler"){
+        var newCar = new TwoWheeler();
+      }else{
+        var newCar = new FourWheeler(type.split(" ")[2]);
+        fuelType = "Fuel Type: "+ type.split(" ")[2];
+        type = "4 Wheeler";
+      }
+      newCar.__proto__ = vehicleObject;
+
+      document.getElementById("result").innerHTML =
+      "<h1>" + type + " Details</h1><br/>" +
+      "Name: " + name + "<br/>" +
+      "Description: " + desc + "<br/>" +
+      "Cost Per Km: " + cost + "<br/>" +
+      "Vehicle Type: " + type + "<br/>" + fuelType;
+    }
+  </script>
+</html>
